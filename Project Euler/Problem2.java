@@ -14,27 +14,31 @@ public class Problem2 extends Euler
 
 	public Problem2()
 	{
-		this.SOLVED = false;
+		this.SOLVED = true;
 	}
 
 	@Override
 	public void solve()
 	{
 		// MAX = 4 million as specified by assignment
-		// add i to sum when even
-		int sum = 0, i = 1, ii = 2, tmp = 0;
-
-		while (i < 4000000)
+		int sum = 0, a = 0, b = 1, tmp = 0;
+		
+		// Sum 	= total sum, and our answer for this assignment
+		// A 	= the variable that holds the first number
+		// B 	= the second variable that will always be 'a + b' on next iteration
+		// tmp 	= temporary storage of A to calculate with.
+		
+		do 
 		{
-			if (ii % 2 == 0)
-			{
-				sum = sum += i;
-			}
-			tmp = i;
-			i = ii;
-			ii += tmp;
+			tmp = a + b;
+			a = b;
+			b = tmp;
 
-		}
+			if (isEven(b))
+			{
+				sum = sum += b;
+			}
+		} while (b <= 4000000);
 
 		System.out.println("Problem 2: " + sum);
 	}
