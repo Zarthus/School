@@ -1,4 +1,4 @@
 School
 ======
 
-Alfa College Hoogeveen
+Alfa College Groningen
