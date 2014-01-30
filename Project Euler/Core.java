@@ -2,8 +2,6 @@ package nl.zarthus.euler;
 
 public class Core
 {
-	public static Object Problems[] = { new Problem1(), new Problem2() };
-
 	public static void main(String[] args)
 	{
 		BenchmarkEuler(new Problem1());
