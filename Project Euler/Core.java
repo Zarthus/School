@@ -1,12 +1,16 @@
 package nl.zarthus.euler;
 
+
 public class Core
 {
 	public static void main(String[] args)
 	{
 		BenchmarkEuler(new Problem1());
 		BenchmarkEuler(new Problem2());
+		new Problem2().solveTwo();
+		BenchmarkEuler(new Problem4());
 	}
+	
 
 	public static void BenchmarkBefore()
 	{

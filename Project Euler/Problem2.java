@@ -74,11 +74,6 @@ public class Problem2 extends Euler
 		System.out.println("Problem 2: " + sum);
 		System.out.println("Problem 2 - Array (0) [all numbers]: " + allNums.toString());
 		System.out.println("Problem 2 - Array (1) [new sum when even]: " + allEven.toString());
-		/*
-			Problem 2: 4613732
-			Problem 2 - Array (0) [all numbers]: [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040, 1346269, 2178309, 3524578, 5702887]
-			Problem 2 - Array (1) [new sum when even]: [2, 10, 44, 188, 798, 3382, 14328, 60696, 257114, 1089154, 4613732]
-		*/
 	}
 
 	public boolean isEven(int value) // Check is a value is even by getting its remainder
