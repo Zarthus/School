@@ -1,13 +1,13 @@
-/* package whatever; // don't place package name! */
+package nl.zarthus.euler;
 
-import java.util.*;
-import java.lang.*;
-import java.io.*;
-
-/* Name of the class has to be "Main" only if the class is public. */
-class Ideone
+public class Problem7 extends Euler
 {
-	public static void main (String[] args) throws java.lang.Exception
+	public Problem7()
+	{
+		this.SOLVED = true;
+	}
+	
+	public void solve() 
 	{
 
 		int primesFound = 1;
@@ -25,7 +25,7 @@ class Ideone
 		System.out.println("Problem 7: " + i + " is the 10,001th prime number");
 	}
 	
-	private static boolean isPrime(long primeCheck)
+	private boolean isPrime(long primeCheck)
 	{
 		if (isEven(primeCheck) || primeCheck == 2)
 			return false;
@@ -39,7 +39,7 @@ class Ideone
 		return true;
 	}
 	
-	private static boolean isEven(long evenCheck)
+	private boolean isEven(long evenCheck)
 	{
 		return (evenCheck % 2) == 0;	
 	}

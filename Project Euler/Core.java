@@ -13,6 +13,7 @@ public class Core
 		// Core.BenchmarkEuler(new Problem4()); // 19 ms
 		Core.BenchmarkEuler(new Problem5()); // 77 ms | not optimal
 		Core.BenchmarkEuler(new Problem6()); // 334904 ns
+		Core.BenchmarkEuler(new Problem7()); // 334904 ns
 	}
 	
 	public static void BenchmarkAfter(long now, long after)
