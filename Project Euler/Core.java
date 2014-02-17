@@ -1,6 +1,5 @@
 package nl.zarthus.euler;
 
-
 public class Core
 {
 	public static void main(String[] args)
@@ -13,7 +12,7 @@ public class Core
 		// Core.BenchmarkEuler(new Problem4()); // 19 ms
 		Core.BenchmarkEuler(new Problem5()); // 77 ms | not optimal
 		Core.BenchmarkEuler(new Problem6()); // 334904 ns
-		Core.BenchmarkEuler(new Problem7()); // 334904 ns
+		Core.BenchmarkEuler(new Problem7()); // 19 ms
 	}
 	
 	public static void BenchmarkAfter(long now, long after)
