@@ -30,7 +30,8 @@ public class Problem8 extends Euler
 
 	public Problem8()
 	{
-		this.SOLVED = false;
+		this.SOLVED = true;
+		this.SOLUTION_STATE = Euler.SOLUTION_OPTIMAL;
 
 		this.caNumbers = this.sNumString.toCharArray();
 	}

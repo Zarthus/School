@@ -17,6 +17,7 @@ public class Problem2 extends Euler
 	public Problem2()
 	{
 		this.SOLVED = true;
+		this.SOLUTION_STATE = Euler.SOLUTION_OPTIMAL;
 	}
 
 	@Override
@@ -24,19 +25,19 @@ public class Problem2 extends Euler
 	{
 		// MAX = 4 million as specified by assignment
 		int sum = 0, a = 0, b = 1, tmp = 0;
-		
+
 		// Sum 	= total sum, and our answer for this assignment
 		// A 	= the variable that holds the first number
 		// B 	= the second variable that will always be 'a + b' on next iteration
 		// tmp 	= temporary storage of A to calculate with.
-		
-		do 
+
+		do
 		{
 			tmp = a + b;
 			a = b;
 			b = tmp;
 
-			if (isEven(b))
+			if (this.isEven(b))
 			{
 				sum = sum += b;
 			}
@@ -44,27 +45,27 @@ public class Problem2 extends Euler
 
 		System.out.println("Problem 2: " + sum);
 	}
-	
+
 	public void solveTwo()
 	{
 		// MAX = 4 million as specified by assignment
 		int sum = 0, a = 0, b = 1, tmp = 0;
 		ArrayList<Integer> allEven = new ArrayList<Integer>(),
 				allNums = new ArrayList<Integer>();
-		
+
 		// Sum 	= total sum, and our answer for this assignment
 		// A 	= the variable that holds the first number
 		// B 	= the second variable that will always be 'a + b' on next iteration
 		// tmp 	= temporary storage of A to calculate with.
-		
-		do 
+
+		do
 		{
 			tmp = a + b;
 			a = b;
 			b = tmp;
 			allNums.add(b);
-			
-			if (isEven(b))
+
+			if (this.isEven(b))
 			{
 				sum = sum += b;
 				allEven.add(sum);
@@ -78,6 +79,6 @@ public class Problem2 extends Euler
 
 	public boolean isEven(int value) // Check is a value is even by getting its remainder
 	{
-		return value % 2 == 0;
+		return (value % 2) == 0;
 	}
 }
