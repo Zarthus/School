@@ -23,14 +23,14 @@ public class Problem31 extends Euler
 		{
 			for (int x = 0; x <= TARGET; x++)
 			{
-				methods[i + 1][x] = methods[i][x]
-						+ (x >= COIN_VALUES[i] ? methods[i + 1][x
-						                                        - COIN_VALUES[i]] : 0);
+				methods[i + 1][x] = methods[i][x] 
+					+ (x >= COIN_VALUES[i] 
+							? methods[i + 1][x - COIN_VALUES[i]] 
+							: 0);
 			}
 		}
-		Integer.toString(methods[COIN_LEN][TARGET]);
 
 		System.out.println("Problem 31: 2 GBP can be made in "
-				+ Integer.toString(methods[COIN_LEN][TARGET]) + " ways");
+				+ methods[COIN_LEN][TARGET] + " ways");
 	}
 }
