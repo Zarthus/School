@@ -12,6 +12,7 @@ public class Problem1 extends Euler
 	public Problem1()
 	{
 		this.SOLVED = true;
+		this.SOLUTION_STATE = Euler.SOLUTION_OPTIMAL;
 	}
 
 	@Override
