@@ -1,0 +1,7 @@
+/src/**
+/bin/**
+/RemoteSystemTempFiles/**
+/.metadata/**
+
+.classpath
+.project
