@@ -14,9 +14,9 @@ public class Problem11 extends Euler
 	 * direction (up, down, left, right, or diagonally) in the 20×20 grid?
 	 */
 
+	// As it turns out, Eclipse's formatter doesn't know how to do jack shit :(
 	public final int[][] aGrid =
-		{
-			{8, 02, 22, 97, 38, 15, 00, 40, 00, 75, 4, 5, 7, 78, 52, 12, 50, 77, 91, 8},
+		{ { 8, 2, 22, 97, 38, 15, 00, 40, 00, 75, 4, 5, 7, 78, 52, 12, 50, 77, 91, 8 },
 			{49, 49, 99, 40, 17, 81, 18, 57, 60, 87, 17, 40, 98, 43, 69, 48, 4, 56, 62, 00},
 			{81, 49, 31, 73, 55, 79, 14, 29, 93, 71, 40, 67, 53, 88, 30, 3, 49, 13, 36, 65},
 			{52, 70, 95, 23, 4, 60, 11, 42, 69, 24, 68, 56, 01, 32, 56, 71, 37, 2, 36, 91},
@@ -38,30 +38,55 @@ public class Problem11 extends Euler
 			{1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48}
 		};
 
-	final int GRID_SIZE = 20, GRID_A_SIZE = this.GRID_SIZE - 1;
-
 	public Problem11()
 	{
-		this.SOLVED = false;
+		this.SOLVED = true;
 		this.SOLUTION_STATE = Euler.SOLUTION_OPTIMAL;
 	}
 
 	@Override
 	public void solve()
 	{
-		long iBiggestNumber;
+		int iMax = -1;
+		iMax = Math.max(this.getMaxProduct(1, 0), iMax);
+		iMax = Math.max(this.getMaxProduct(0, 1), iMax);
+		iMax = Math.max(this.getMaxProduct(1, 1), iMax);
+		iMax = Math.max(this.getMaxProduct(1, -1), iMax);
+		System.out.println("Problem 11: " + Integer.toString(iMax));
+	}
 
-		for (int row = 0; row < this.GRID_A_SIZE; row++)
+	public int getMaxProduct(int a, int b)
+	{
+		int iMax = -1;
+		int iGridLen = this.aGrid.length;
+		for (int y = 0; y < iGridLen; y++)
 		{
-			for (int col = 0; col < this.GRID_A_SIZE; col++)
+			for (int x = 0; x < this.aGrid[y].length; x++)
 			{
-
-				for (int diag = 0; diag < this.GRID_A_SIZE; diag++)
-				{
-
-				}
+				iMax = Math.max(this.getProductOf(x, y, a, b, 4), iMax);
 			}
 		}
+		return iMax;
+	}
+
+	public int getProductOf(int x, int y, int dx, int dy, int n)
+	{
+		if (!this.isInBounds(x + ((n - 1) * dx), y + ((n - 1) * dy)))
+		{
+			return -1;
+		}
+
+		int iProduct = 1;
+		for (int i = 0; i < n; i++, x += dx, y += dy)
+		{
+			iProduct *= this.aGrid[y][x];
+		}
+		return iProduct;
+	}
+
+	public boolean isInBounds(int x, int y)
+	{
+		return (0 <= y) && (y < this.aGrid.length) && (0 <= x) && (x < this.aGrid[y].length);
 	}
 
 }
