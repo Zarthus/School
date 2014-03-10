@@ -17,21 +17,28 @@ public class CoreUtils
 	 * equation: (a*a + b*b == c*c)
 	 */
 
-	public boolean isPrime(long num)
+	public boolean isPrime(long n)
 	{
-		if ((num & 1) == 0)
+		if (n < 2)
 		{
-			return false; // Dividable by 2?
+			return false;
 		}
-
-		for (long i = 2; i <= num; i++)
+		if ((n == 2) || (n == 3))
 		{
-			if ((num % i) == 0)
+			return true;
+		}
+		if (((n % 2) == 0) || ((n % 3) == 0))
+		{
+			return false;
+		}
+		long sqrtN = (long) Math.sqrt(n) + 1;
+		for (long i = 6L; i <= sqrtN; i += 6)
+		{
+			if (((n % (i - 1)) == 0) || ((n % (i + 1)) == 0))
 			{
 				return false;
 			}
 		}
-
 		return true;
 	}
 
