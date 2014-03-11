@@ -48,11 +48,19 @@ public class Problem11 extends Euler
 	public void solve()
 	{
 		int iMax = -1;
+
+		// Math.max gets the highest of two provided values, which basically is
+		// a faster
+		// "int x = 2, y = 1;
+		// iMax = (x > y ? x : y);"
+		//
+		// We're not constantly resetting the variable, just making sure it is
+		// the highest of two values
 		iMax = Math.max(this.getMaxProduct(1, 0), iMax);
 		iMax = Math.max(this.getMaxProduct(0, 1), iMax);
 		iMax = Math.max(this.getMaxProduct(1, 1), iMax);
 		iMax = Math.max(this.getMaxProduct(1, -1), iMax);
-		System.out.println("Problem 11: " + Integer.toString(iMax));
+		System.out.println("Problem 11: " + iMax); // Completes in 1ms
 	}
 
 	public int getMaxProduct(int a, int b)
@@ -69,24 +77,52 @@ public class Problem11 extends Euler
 		return iMax;
 	}
 
-	public int getProductOf(int x, int y, int dx, int dy, int n)
+	public int getProductOf(int x, int y, int x2, int y2, int n)
 	{
-		if (!this.isInBounds(x + ((n - 1) * dx), y + ((n - 1) * dy)))
+		// if it is out of bounds, we clearly cannot continue.
+		if (this.OutOfBounds(x + ((n - 1) * x2), y + ((n - 1) * y2)))
 		{
 			return -1;
 		}
 
+		// Select
 		int iProduct = 1;
-		for (int i = 0; i < n; i++, x += dx, y += dy)
+		for (int i = 0; i < n; i++, x += x2, y += y2)
 		{
 			iProduct *= this.aGrid[y][x];
 		}
 		return iProduct;
 	}
 
-	public boolean isInBounds(int x, int y)
+	public boolean OutOfBounds(int x, int y)
 	{
-		return (0 <= y) && (y < this.aGrid.length) && (0 <= x) && (x < this.aGrid[y].length);
-	}
+		// We check if we're accessing an array value that is out of bounds.
+		// In essence and in this example, it simply means we're not accessing
+		// array values past 19 (20) or below 0.
 
+		// System.out.println(this.aGrid.length + "|> " + x + "|" + y);
+
+		// Return idea one: Doesn't check for array[<num>] value to be greater
+		// than <x>, assuming the array is always a square both values will be
+		// the same.
+
+		return (((y <= 0) || (x <= 0)) || ((y > (this.aGrid.length - 4)) || (x > (this.aGrid[y].length - 4))));
+
+		// Return idea two: might work with arrays that aren't squares (such as
+		// `int[25][32]`, but not three dimensional arrays)
+		// return (((y <= 0) || (x <= 0)) || ((y >= this.aGrid.length) || (x >=
+		// this.aGrid.length)) || ((x >= this.aGrid[y].length) || (y >=
+		// this.aGrid[y].length)));
+
+		// Return idea three: try { } catch { } AIOOB exceptions.
+		// try {
+		// 	this.aGrid[y];
+		//	this.aGrid[y][x];
+		// }
+		// catch (ArrayIndexOutOfBoundsException e)
+		// {
+		//		return false;
+		// }
+		// return true;
+	}
 }
