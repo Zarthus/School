@@ -19,7 +19,7 @@ public class Core
 		// Core.BenchmarkEuler(new Problem11()); // 1 ms
 		// Core.BenchmarkEuler(new Problem12()); // NOT YET MADE
 		// Core.BenchmarkEuler(new Problem13()); // 6 ms
-		Core.BenchmarkEuler(new Problem18()); // NOT YET
+		Core.BenchmarkEuler(new Problem18()); // 1 ms
 		// Core.BenchmarkEuler(new Problem31()); // 269434 nano seconds | 1 ms
 	}
 
