@@ -85,7 +85,7 @@ public class Problem11 extends Euler
 			return -1;
 		}
 
-		// Select
+		// Select and multiply iProduct by grid[y][x]
 		int iProduct = 1;
 		for (int i = 0; i < n; i++, x += x2, y += y2)
 		{
