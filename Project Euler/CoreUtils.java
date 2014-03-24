@@ -47,4 +47,13 @@ public class CoreUtils
 		return ((a * a) + (b * b)) == (c * c);
 	}
 
+	public boolean isEven(int even)
+	{
+		return (even % 2) == 0;
+	}
+
+	public boolean isDividableBy(int dividable, int divider)
+	{
+		return (dividable % divider) == 0;
+	}
 }

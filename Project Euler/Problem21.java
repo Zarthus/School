@@ -25,4 +25,24 @@ public class Problem21 extends Euler
 	public void solve()
 	{
 	}
+
+	private int divSum(int q)
+	{
+		int sum = 0;
+
+		for (int divider = 2; divider <= Math.sqrt(q); divider++)
+		{
+			if (this.isDividableBy(q, divider))
+			{
+				sum += divider;
+			}
+		}
+
+		return sum;
+	}
+
+	private boolean isDividableBy(int dividable, int divider)
+	{
+		return (dividable % divider) == 0;
+	}
 }
