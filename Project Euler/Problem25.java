@@ -23,29 +23,72 @@
  */
 
 package nl.zarthus.euler;
+import java.math.BigInteger;
 
+public class Problem25 extends Euler
+{
+	/*
+		The Fibonacci sequence is defined by the recurrence relation:
 
-public class Problem31 extends Euler {
-	public Problem31() {
+		Fn = Fn−1 + Fn−2, where F1 = 1 and F2 = 1.
+		Hence the first 12 terms will be:
+
+		F1 = 1
+		F2 = 1
+		F3 = 2
+		F4 = 3
+		F5 = 5
+		F6 = 8
+		F7 = 13
+		F8 = 21
+		F9 = 34
+		F10 = 55
+		F11 = 89
+		F12 = 144
+		The 12th term, F12, is the first term to contain three digits.
+
+		What is the first term in the Fibonacci sequence to contain 1000 digits?
+	 */
+
+	public Problem25()
+	{
 		this.SOLVED = true;
 		this.SOLUTION_STATE = Euler.SOLUTION_OPTIMAL;
 	}
 
+	private final int MAX_DIGITS = 1000;
+
 	@Override
-	public final void solve() {
-		final int TARGET = 200;
-		final int[] COIN_VALUES = {1, 2, 5, 10, 20, 50, 100, 200};
-		final int COIN_LEN = COIN_VALUES.length;
+	public void solve()
+	{
+		BigInteger lowThreshold = BigInteger.TEN.pow(MAX_DIGITS - 1);
+		BigInteger highThreshold = BigInteger.TEN.pow(MAX_DIGITS);
 
-		int[][] methods = new int[COIN_VALUES.length + 1][TARGET + 1];
-		methods[0][0] = 1;
+		BigInteger previous = BigInteger.ONE;
+		BigInteger current = BigInteger.ZERO;
 
-		for (int i = 0; i < COIN_LEN; i++) {
-			for (int x = 0; x <= TARGET; x++) {
-				methods[i + 1][x] = methods[i][x] + (x >= COIN_VALUES[i] ? methods[i + 1][x - COIN_VALUES[i]] : 0);
+		int i = 0;
+
+		while (true)
+		{
+			if (current.compareTo(lowThreshold) >= 0)
+			{
+				System.out.println("Problem 25: " + Integer.toString(i));
+				break;
 			}
-		}
+			else if (current.compareTo(highThreshold) >= 0)
+			{
+				System.out.println("Problem 25: No viable solution was found");
+				break;
+			}
 
-		System.out.println("Problem 31: 2 GBP can be made in " + methods[COIN_LEN][TARGET] + " ways");
+			BigInteger tmp = current.add(previous);
+			previous = current;
+			current = tmp;
+
+			i++;
+		}
 	}
+
+
 }
