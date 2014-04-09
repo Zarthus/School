@@ -1,6 +1,14 @@
+## Java ##
+
 *.class
 
 # Package Files #
 *.jar
 *.war
 *.ear
+
+## Assembly ##
+
+*.dev
+*.hex
+*.lst
