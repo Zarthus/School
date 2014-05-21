@@ -4,38 +4,45 @@ $include(system_includes.asm)
 ;	@date	14/05/2014
 
 start:	MOV	A,P0	; Read the switch
+	JMP 	case3	; Select which case to run.
 
-	; CASE 0 -- add 18 to P0 and put it in P1. Compiles & works
+case0:	; CASE 0 -- add 18 to P0 and put it in P1. Compiles & works
+
 	ADD	A,#18	; Add 18 to A
-	MOV 	P1,A	; Move A to P1
 	
-	; CASE 1 -- multiply P0 by 2, and minus 10, put it in P1. Compiles & works
-	MOV	B,P0	; Move P0 into B
-	MUL 	AB	; Multiply A by A
-	SUBB 	A,#10	; Subtract 10 from A
-	MOV 	P1,A	; Move A to P1
+	JMP	eop	; Go to end of program
 	
-	; CASE 2 -- Multiply P0+5 by 3. Doesn't compile therefore doesn't work.
-	MOV	A,P0	; Move P0 into B
-	ADD	B,#3	; Add 3 to A
-	ADD	A,#5	; Add 5 to B
-	MUL	AB	; Multiply B by 3
-	MOV 	P1,B	; Move B into P1
+case1:	; CASE 1 -- multiply P0 by 2, and minus 10, put it in P1. Compiles & works
 
-	; CASE 3 -- P0 to the power of 2. Doesn't compile
-	MOV 	A,P0	; Move P0 into A
-	MUL 	AA	; A to the power of 2 is simply A * A
-	MOV	P1,A	; Move the end value into P1
+	MOV	B,P0	; Move P0 into B
+	ADD 	A,B	; Multiply A by A (B == A)
+	SUBB 	A,#10	; Subtract 10 from A
 	
-	; CASE 4 -- P0 + 256
-	MOV	A,P0	; Move P0 into A. No compile
-	ADD	A,#256	; Add 256 to A
-	MOV 	P1,A	; Move the end value into P1
+	JMP	eop	; Go to end of program
 	
+case2:	; CASE 2 -- Multiply P0+5 by 3. Doesn't compile therefore doesn't work.
+	ADD	A,#5	; Add 3 to A
+	MOV	B,A	; B = A
+	ADD	A,B	; Multiply B by 3
+	ADD	A,B	; Straightforward. We add B to A twice (therefore: * 3)
+	
+	JMP	eop	; Go to end of program
+	
+case3:	; CASE 3 -- P0 to the power of 2. Doesn't compile
+	MOV	A,B	; B = A
+	MUL 	AA	; A to the power of 2 is simply A * A 
+
+	JMP	eop	; Go to end of program
+	
+case4:	; CASE 4 -- P0 + 256
+	;MOV	A,P0	; Move P0 into A. No compile
+	;ADD	A,#256	; Add 256 to A
+	
+	JMP	eop	; Go to end of program
 	;... todo (page 21)
 	
-
-	MOV	P1,A	; A on the exit port.
-	JMP	start	; 
+eop:
+	MOV	P1,A	; A on the exit port. - Avoid duplicate code by doing it at the end of the program
+	JMP	start	; restart the loop
 	
-	END		; end of program
+	END		; end the program
