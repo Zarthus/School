@@ -12,7 +12,7 @@ abstract class Simple_API
     public $status_message;
     public $data = array();
 
-    public function __construct($api_key, $dbh, array $params)
+    public function __construct($dbh, array $params, $api_key = null)
     {
         $this->api_key = $api_key;
         $this->dbh = $dbh;
@@ -26,6 +26,19 @@ abstract class Simple_API
         $this->setStatus(200);
     }
 
+    public function setApiKey($api_key)
+    {
+        $this->api_key = $api_key;
+    }
+
+    public function validateRequest()
+    {
+        if ($this->api_key === null)
+            return $this->getInvalidRequestResponse(401, "No API key was supplied.");
+
+        return TRUE;
+    }
+
     public function getInvalidRequestResponse($status, $message)
     {
         $this->setStatus((int) $status);
@@ -35,12 +48,21 @@ abstract class Simple_API
         return $this->getResponse();
     }
 
+    /* Warning, this kills off the script as result if $die = true. */
+    public function sendInvalidRequestResponse($status, $message, $die = false)
+    {
+        echo $this->getInvalidRequestResponse($status, $message);
+        if ($die)
+            die($status);
+    }
+
     public function getResponse($format = 'auto')
     {
         $response = array
         (
             "status" => $this->getStatus(),
             "status_message" => $this->getStatusMessage(),
+            "command" => $this->getCommand(),
             "data" => $this->getData()
         );
 
@@ -59,7 +81,16 @@ abstract class Simple_API
         }
     }
 
-    protected function getStatus()
+    /* Warning, this kills off the script as result if $die = true. */
+    public function sendResponse($format = 'auto', $die = false)
+    {
+        echo $this->getResponse($format);
+
+        if ($die)
+            die($this->status_id);
+    }
+
+    public function getStatus()
     {
         if (!isset($this->status_id))
             return 404;
@@ -67,7 +98,7 @@ abstract class Simple_API
         return (int) $this->status_id;
     }
 
-    protected function getStatusMessage()
+    public function getStatusMessage()
     {
         if (!isset($this->status_message))
             return "No status message set.";
@@ -75,7 +106,7 @@ abstract class Simple_API
         return $this->status_message;
     }
 
-    protected function getData()
+    public function getData()
     {
         if (!isset($this->data))
             return array();
@@ -83,12 +114,12 @@ abstract class Simple_API
         return (array) $this->data;
     }
 
-    protected function getCommand()
+    public function getCommand()
     {
         return $this->command;
     }
 
-    protected function getFormat()
+    public function getFormat()
     {
         if (!isset($this->format) || !is_string($this->format) || !$this->isValidFormat($this->format))
             return 'json';
@@ -134,7 +165,7 @@ abstract class Simple_API
         if (!$this->isValidCommand($command))
             return FALSE;
 
-        $this->command = $command;
+        $this->command = strtolower($command);
         return TRUE;
     }
 

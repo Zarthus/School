@@ -5,9 +5,9 @@ class Student_API extends Simple_API
     protected $class_id;
     protected $student_id;
 
-    public function __construct($api_key, $dbh, array $params)
+    public function __construct($dbh, array $params, $api_key = null)
     {
-        parent::__construct($api_key, $dbh, $params);
+        parent::__construct($dbh, $params, $api_key);
 
         if (isset($params["class_id"]))
             $this->setClassID($params["class_id"]);
@@ -18,7 +18,7 @@ class Student_API extends Simple_API
 
     public function setClassID($id)
     {
-        if (!is_int($id) || (!is_string($id) && !is_numeric($id))
+        if (!is_int($id) || (!is_string($id) && !is_numeric($id)))
             return FALSE;
 
         $this->class_id = (int) $id;
@@ -27,7 +27,7 @@ class Student_API extends Simple_API
 
     public function setStudentID($id)
     {
-        if (!is_int($id) || (!is_string($id) && !is_numeric($id))
+        if (!is_int($id) || (!is_string($id) && !is_numeric($id)))
             return FALSE;
 
         $this->student_id = (int) $id;
@@ -47,6 +47,10 @@ class Student_API extends Simple_API
         if (!isset($this->student_id))
             return $this->getInvalidRequestResponse("Student ID not set.");
 
+        $this->setStatus(200);
+        $this->setStatusReason("request-get-mentor");
+        $this->setData(array());
+
         return $this->getResponse();
     }
 
@@ -56,7 +60,7 @@ class Student_API extends Simple_API
             return $this->getInvalidRequestResponse("Student ID not set.");
 
         $this->setStatus(200);
-        $this->setStatusReason("");
+        $this->setStatusReason("request-get-account");
         $this->setData(array());
 
         return $this->getResponse();
@@ -68,16 +72,10 @@ class Student_API extends Simple_API
             return $this->getInvalidRequestResponse("Class ID not set.");
 
         $this->setStatus(200);
-        $this->setStatusReason("");
+        $this->setStatusReason("request-get-class");
         $this->setData(array());
 
         return $this->getResponse();
-    }
-
-    function getMentor()
-    {
-        if (!is_int($this->class_id))
-            return $this->getInvalidRequestResponse(200, "ClassID is not numeric.");
     }
 
     protected function isValidCommand($command)
