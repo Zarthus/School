@@ -162,10 +162,12 @@ abstract class Simple_API
 
     protected function setCommand($command)
     {
+        $command = strtolower($command);
+        
         if (!$this->isValidCommand($command))
             return FALSE;
 
-        $this->command = strtolower($command);
+        $this->command = $command;
         return TRUE;
     }
 
