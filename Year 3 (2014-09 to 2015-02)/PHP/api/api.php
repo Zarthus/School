@@ -1,19 +1,19 @@
 <?php
+
+error_reporting(-1); ini_set('display_errors', 1);
 include_once('autoloader.php');
 include_once('dbconn.php');
 
-$api_key = isset($_GET['api_key']) ? $_GET['api_key'] : null;
-$api = new Student_API($dbh, $_GET, $api_key);
+$api = new Student_API($dbh, $_GET);
 
-if (empty($_GET) || $_SERVER['REQUEST_METHOD'] != 'GET') {
-    $api->sendInvalidRequestResponse(400, "No GET request.", true);
-}
-
-$api_valid = $api->validateRequest(); // Validate the request
+// Validate the request, asking the API if it is missing any required values, true if all is good.
+// An API response according to settings if something is wrong (status_message will contain the error, and
+// the status code will not be 200).
+$api_valid = $api->validateRequest();
 if ($api_valid !== TRUE)
 {
     echo $api_valid;
     die($api->getStatus());
 }
 
-$api->sendResponse('auto', true);
+$api->sendCall('auto', true);

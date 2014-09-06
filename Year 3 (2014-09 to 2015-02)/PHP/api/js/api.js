@@ -3,8 +3,8 @@ var ApiCallController = function($scope, $http) {
     $scope.message = "API Call not yet made";
     $scope.data = ["not set", "noot set", "nooot set"];
 
-    $scope.callApi = function(api_key) {
-        $http.get('api.php?api_key=' + api_key).success(function(data, status, headers, config) {
+    $scope.callApi = function(params) {
+        $http.get('api.php?' + params).success(function(data, status, headers, config) {
            $scope.status = data['status'];
            $scope.message = data['status_message'];
            $scope.command = data['command'];

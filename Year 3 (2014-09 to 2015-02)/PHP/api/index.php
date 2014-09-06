@@ -7,15 +7,18 @@
     </head>
     <body>
         <div ng-controller="ApiCallController">
-            <button ng-click="callApi(0)">call api</button>
+            <button ng-click="callApi('')">call api - no GET info</button> - 
+            <button ng-click="callApi('api_key=0999001&student_id=1&command=account')">call api - account info</button> - 
+            <button ng-click="callApi('api_key=0999001&student_id=1&command=teacher')">call api - teacher info</button> - 
+            <button ng-click="callApi('api_key=0999001&student_id=1&command=class')">call api - class info</button>
             <br />
             <ul>
                 <li>
                     [{{status}}] {{message}}
                 </li>
                 <ul>
-                    <li ng-repeat="mydata in data">
-                        {{mydata}}
+                    <li ng-repeat="(key, value) in data">
+                        {{key}}: {{value}}
                     </li>
                 </ul>
             </ul>

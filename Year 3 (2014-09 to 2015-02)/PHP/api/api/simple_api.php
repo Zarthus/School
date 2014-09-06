@@ -12,10 +12,13 @@ abstract class Simple_API
     public $status_message;
     public $data = array();
 
-    public function __construct($dbh, array $params, $api_key = null)
+    public function __construct($dbh, array $params)
     {
-        $this->api_key = $api_key;
+        $this->setStatus(200);
         $this->dbh = $dbh;
+
+        if (isset($params['api_key']))
+            $this->setApiKey($params['api_key']);
 
         if (isset($params["format"]))
             $this->setFormat($params["format"]);
@@ -23,7 +26,6 @@ abstract class Simple_API
         if (isset($params["command"]))
             $this->setCommand($params["command"]);
 
-        $this->setStatus(200);
     }
 
     public function setApiKey($api_key)
@@ -56,35 +58,13 @@ abstract class Simple_API
             die($status);
     }
 
-    public function getResponse($format = 'auto')
-    {
-        $response = array
-        (
-            "status" => $this->getStatus(),
-            "status_message" => $this->getStatusMessage(),
-            "command" => $this->getCommand(),
-            "data" => $this->getData()
-        );
-
-        if ($format == 'auto')
-            $format = $this->format;
-
-        if ($format == 'xml')
-        {
-            $xml = new SimpleXMLElement('<root/>');
-            array_walk_recursive($response, array($xml, 'addChild'));
-            return $xml->asXML();
-        }
-        else
-        {
-            return json_encode($response);
-        }
-    }
+    /* make an api call which figures out which command to use automatically */
+    public abstract function call($format = 'auto');
 
     /* Warning, this kills off the script as result if $die = true. */
-    public function sendResponse($format = 'auto', $die = false)
+    public function sendCall($format = 'auto', $die = false)
     {
-        echo $this->getResponse($format);
+        echo $this->call($format);
 
         if ($die)
             die($this->status_id);
@@ -127,6 +107,31 @@ abstract class Simple_API
         return $this->format;
     }
 
+    protected function getResponse($format = 'auto')
+    {
+        $response = array
+        (
+            "status" => $this->getStatus(),
+            "status_message" => $this->getStatusMessage(),
+            "command" => $this->getCommand(),
+            "data" => $this->getData()
+        );
+
+        if ($format == 'auto')
+            $format = $this->format;
+
+        if ($format == 'xml')
+        {
+            $xml = new SimpleXMLElement('<root/>');
+            array_walk_recursive($response, array($xml, 'addChild'));
+            return $xml->asXML();
+        }
+        else
+        {
+            return json_encode($response);
+        }
+    }
+
     protected function setStatus($status)
     {
         if (!is_numeric($status))
@@ -163,7 +168,7 @@ abstract class Simple_API
     protected function setCommand($command)
     {
         $command = strtolower($command);
-        
+
         if (!$this->isValidCommand($command))
             return FALSE;
 
