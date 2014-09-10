@@ -15,19 +15,55 @@
             sub btnSubmit_click(s As Object, e As EventArgs)
                 'Ordering a pizza'
 
-                'Check if want cheese'
-                Dim wantsCheese as Boolean 
-                Dim cheeseMsg as String 
-                wantsCheese = cheese.checked
-                 
-                if (wantsCheese = True)
-                    cheeseMsg = "yes"
-                else
-                    cheeseMsg = "no"
+                'initialise the required variables'
+                Dim wantsCheese as Boolean = cheese.checked
+                Dim wantsOnions as Boolean = onions.checked
+                Dim wantsHam as Boolean = ham.checked
+                Dim wantsHawaii as Boolean = hawaii.checked
+                Dim cost as Double = 5
+                Dim tipValue as Double = CDbl(tips.value)
+
+                Dim tipMessage as String
+                Dim foodMessage as String = "Ingredients: "
+
+                'TODO: Ternary operators (but I can't get those working in VB)'
+                'check which ingredients are checked.'
+                if (wantsCheese = True) 
+                    foodMessage = foodMessage & "cheese, "
+                    cost += 2
+                end if
+                if (wantsOnions = True) 
+                    foodMessage = foodMessage & "onions, "
+                    cost += 3
+                end if
+                if (wantsHam = True) 
+                    foodMessage = foodMessage & "ham, "
+                    cost += 5
+                end if
+                if (wantsHawaii = True) 
+                    foodMessage = foodMessage & "hawaii, "
+                    cost += 6
                 end if
                 
-                'Set output to bottom of screen        
-                returnMessage.innerHTML = "<hr /><b>" & name.value & "</b><br />" & message.value & "<br /> Cheese: " & cheeseMsg 
+                if (foodMessage.length = 0 OR foodMessage.length = "Ingredients: ".length)
+                    foodMessage = "No Ingredients"
+                else 
+                    foodMessage = foodMessage.SubString(0, foodMessage.length - 2)
+                end if
+                
+                'Check if any tip was given'
+                if (tipValue = 0)
+                    tipMessage = "No tip given, the server will be sad :("
+                else
+                    tipMessage = "Thank you for your generous tip of €" & tipValue
+                    cost += tipValue
+                end if
+
+
+                'Set output to bottom of screen'
+                returnMessage.innerHTML = "<hr /><b>" & name.value & "</b><br />" & message.value & "<br /> "&  _
+                                          "<br />" & foodMessage & "<br />Tip: " & tipMessage & "<br />Cost: €" & cost - tipValue & _
+                                          "<br />Total: €" & cost 
 
                 'remove field values'
                 name.value = ""
@@ -36,7 +72,7 @@
         </script>
     </head>
     <body>
-        <form action="msg.aspx" method="get" runat="server">
+        <form action="msg.aspx" runat="server">
         <div>
             <h1>Order Pizza</h1>
             <input type="text" id="name" name="name" class="wide" placeholder ="Your name" runat="server" />
@@ -45,9 +81,18 @@
             <br />
             Cheese: <input type="checkbox" id="cheese" name="cheese" runat="server" />
             <br />
+            Onions: <input type="checkbox" id="onions" name="onions" runat="server" />
+            <br />
+            Ham: <input type="checkbox" id="ham" name="ham" runat="server" />
+            <br />
+            Hawaii: <input type="checkbox" id="hawaii" name="hawaii" runat="server" />
+            <br />
+            Tip: €<input type="text" maxlength="5" size="3" id="tips" name="tips" value="0" runat="server" />
+            <br />
             <input type="submit" id="btnSubmit" value="submit" runat="server" OnServerClick="btnSubmit_click"/>
         </div>
         <div id="returnMessage" runat="server">
+            No order has been sent yet.
         </div>
         </form>
     </body>
