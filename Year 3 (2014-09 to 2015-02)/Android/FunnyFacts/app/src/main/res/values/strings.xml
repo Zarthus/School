@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FunnyFacts</string>
+    <string name="funny_facts">Funny Facts!</string>
+    <string name="randomfact">[random fact]</string>
+    <string name="btn_nextfact">Next Fact!</string>
+    <string name="btn_favor">Favourite!</string>
+    <string name="action_settings">Settings</string>
+
+</resources>
