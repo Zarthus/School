@@ -11,7 +11,7 @@
             }
         </style>
 
-        <script runat="server">
+         <script runat="server">
             sub btnSubmit_click(s As Object, e As EventArgs)
                 'Ordering a pizza'
 
@@ -34,7 +34,7 @@
                 end if
                 if (wantsOnions = True) 
                     foodMessage = foodMessage & "onions, "
-                    cost += 3
+                    cost += 3.50
                 end if
                 if (wantsHam = True) 
                     foodMessage = foodMessage & "ham, "
@@ -63,8 +63,9 @@
                 'Set output to bottom of screen'
                 returnMessage.innerHTML = "<hr /><b>" & name.value & "</b><br />" & message.value & "<br /> "&  _
                                           "<br />" & foodMessage & "<br />Tip: " & tipMessage & "<br />Cost: €" & cost - tipValue & _
-                                          "<br />Total: €" & cost 
+                                          "<br />Total: €" & cost
 
+                CalendarLabel.InnerHTML = "<p>Order will be delivered on: " & Calendar.SelectedDate.ToShortDateString() & "</p>"
                 'remove field values'
                 name.value = ""
                 message.value = ""
@@ -79,20 +80,28 @@
             <br />
             <textarea name="message" id="message" rows="10" class="wide" runat="server">Your message</textarea>
             <br />
-            Cheese: <input type="checkbox" id="cheese" name="cheese" runat="server" />
+            Cheese: <input type="checkbox" id="cheese" name="cheese" runat="server" /> (+€2.-)
             <br />
-            Onions: <input type="checkbox" id="onions" name="onions" runat="server" />
+            Onions: <input type="checkbox" id="onions" name="onions" runat="server" /> (+€3.50)
             <br />
-            Ham: <input type="checkbox" id="ham" name="ham" runat="server" />
+            Ham: <input type="checkbox" id="ham" name="ham" runat="server" /> (+€5.-)
             <br />
-            Hawaii: <input type="checkbox" id="hawaii" name="hawaii" runat="server" />
+            Hawaii: <input type="checkbox" id="hawaii" name="hawaii" runat="server" /> (+€6.-)
             <br />
             Tip: €<input type="text" maxlength="5" size="3" id="tips" name="tips" value="0" runat="server" />
+            <br />
+            <asp:Calendar id="Calendar" runat="server"  
+                 SelectionMode="Day" 
+                 ShowGridLines="True">
+            </asp:Calendar>
             <br />
             <input type="submit" id="btnSubmit" value="submit" runat="server" OnServerClick="btnSubmit_click"/>
         </div>
         <div id="returnMessage" runat="server">
             No order has been sent yet.
+        </div>
+        <div id="CalendarLabel" runat="server">
+            Date: No date selected.
         </div>
         </form>
     </body>
