@@ -24,6 +24,6 @@ Insert '0' to exit the program, or '1' to repeat the question.
 How much is 5514 + 4188?
 > 9702
 You're the best!
-Good job! You got 3 correct answers and 0wrong answers.
+Good job! You got 3 correct answers and 0 wrong answers.
 Process finished with exit code 0
 ```
